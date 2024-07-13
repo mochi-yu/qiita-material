@@ -32,7 +32,7 @@ resource "null_resource" "lambda_build" {
   triggers = {
     code_diff = join("", [
       for file in fileset(local.golang_codedir, "**/{*.go,go.mod,go.sum}")
-      : filebase64("${local.golang_codedir}/${file}")
+      : filesha256("${local.golang_codedir}/${file}")
     ])
   }
 
