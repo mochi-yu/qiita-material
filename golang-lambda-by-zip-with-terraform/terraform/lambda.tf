@@ -18,7 +18,7 @@ resource "aws_lambda_function" "lifecheck_lambda" {
   s3_bucket        = local.s3_bucket
   s3_key           = data.aws_s3_object.zip.key
   role             = aws_iam_role.lambda_role.arn
-  handler          = "main"
+  handler          = "bootstrap"
   source_code_hash = data.aws_s3_object.zip_hash.body
   runtime          = "provided.al2"
 }
