@@ -1,4 +1,4 @@
-module golang-lambda-by-zip-with-terraform
+module golang-lambda-by-docker-with-terraform
 
 go 1.22.2
 

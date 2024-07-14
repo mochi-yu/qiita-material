@@ -23,7 +23,7 @@ func HandleRequest(ctx context.Context, event *MyEvent) (*MyResponse, error) {
 		return nil, fmt.Errorf("received nil event")
 	}
 
-	msg := "Hello, " + event.Name + "!"
+	msg := "Hello, " + event.Name + "! This is Docker Lambda."
 	res := MyResponse{
 		Message: msg,
 		Time:    time.Now().String(),
