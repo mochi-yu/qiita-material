@@ -1,4 +1,4 @@
-module golang-lambda-by-docker-with-terraform
+module lambda-with-event-bridge-by-terraform
 
 go 1.22.2
 
