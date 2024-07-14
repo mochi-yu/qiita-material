@@ -1,5 +1,5 @@
 locals {
-  s3_bucket = "mochi-yu-lambda-build"  # FIXME
+  s3_bucket = "hoge"  # FIXME
   s3_key_prefix = "test-lambda"
   s3_base_path = "${local.s3_bucket}/${local.s3_key_prefix}"
 
@@ -8,7 +8,7 @@ locals {
   hash_file_name = "image_digest.txt"
 }
 
-resource "aws_lambda_function" "lifecheck_lambda" {
+resource "aws_lambda_function" "test_lambda" {
   function_name    = "test-lambda"
   package_type     = "Image"
   image_uri        = "${aws_ecr_repository.test_lambda.repository_url}:latest"

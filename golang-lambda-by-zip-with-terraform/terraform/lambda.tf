@@ -13,7 +13,7 @@ locals {
   hash_file_path = "${local.golang_codedir}/../archive/${local.hash_file_name}"
 }
 
-resource "aws_lambda_function" "lifecheck_lambda" {
+resource "aws_lambda_function" "test_lambda" {
   function_name    = "test-lambda"
   s3_bucket        = local.s3_bucket
   s3_key           = data.aws_s3_object.zip.key

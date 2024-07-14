@@ -1,5 +1,5 @@
 locals {
-  s3_bucket = "mochi-yu-lambda-build"  # FIXME
+  s3_bucket = "hoge"  # FIXME
   s3_key_prefix = "test-lambda"
   s3_base_path = "${local.s3_bucket}/${local.s3_key_prefix}"
 
@@ -8,7 +8,7 @@ locals {
   hash_file_name = "image_digest.txt"
 }
 
-resource "aws_lambda_function" "lifecheck_lambda" {
+resource "aws_lambda_function" "test_lambda" {
   function_name    = "test-lambda"
   package_type     = "Image"
   image_uri        = "${aws_ecr_repository.test_lambda.repository_url}:latest"
@@ -19,6 +19,7 @@ resource "aws_lambda_function" "lifecheck_lambda" {
 resource "aws_iam_role" "lambda_role" {
   name = "role-for-test_lambda"
   assume_role_policy = file("lambda-assume-role.json")
+  managed_policy_arns = [ "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole" ]
 }
 
 resource "null_resource" "lambda_build" {
