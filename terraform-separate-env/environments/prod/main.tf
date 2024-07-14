@@ -12,3 +12,8 @@ terraform {
 provider "aws" {
   region = "ap-northeast-1"
 }
+
+module "app" {
+  source = "../../modules"
+  env = "prod"
+}
