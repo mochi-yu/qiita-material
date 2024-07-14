@@ -13,7 +13,7 @@ resource "aws_lambda_function" "lifecheck_lambda" {
   package_type     = "Image"
   image_uri        = "${aws_ecr_repository.test_lambda.repository_url}:latest"
   role             = aws_iam_role.lambda_role.arn
-  source_code_hash = data.aws_s3_object.image_hash.body
+  source_code_hash = base64sha256(data.aws_s3_object.image_hash.body)
 }
 
 resource "aws_iam_role" "lambda_role" {
