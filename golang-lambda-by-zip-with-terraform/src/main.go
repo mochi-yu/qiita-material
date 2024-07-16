@@ -28,7 +28,7 @@ func HandleRequest(ctx context.Context, event *MyEvent) (*MyResponse, error) {
 		Message: msg,
 		Time:    time.Now().String(),
 	}
-	log.Print(msg)
+	log.Print(res)
 
 	return &res, nil
 }
