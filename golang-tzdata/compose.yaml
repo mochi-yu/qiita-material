@@ -1,0 +1,11 @@
+services:
+  develop:
+    build:
+      context: .
+      dockerfile: ./dev.Dockerfile
+    image: test-golang-tzdata-dev
+  product:
+    build:
+      context: .
+      dockerfile: ./prod.Dockerfile
+    image: test-golang-tzdata-prod
