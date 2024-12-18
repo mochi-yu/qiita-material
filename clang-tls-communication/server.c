@@ -51,8 +51,6 @@ int main(int argc, char const *argv[]) {
   // サーバーループ
   printf("Start Server:\n");
   for (;;) {
-    BIO *client_bio;
-    SSL *ssl;
     unsigned char buf[8192];
     size_t nread;
     size_t nwritten;
@@ -64,9 +62,11 @@ int main(int argc, char const *argv[]) {
     }
 
     // 新しいクライアント接続がきたら、SSLハンドシェイクの準備をする
+    BIO *client_bio;
     client_bio = BIO_pop(acceptor_bio);
     printf("New client connection accepted\n");
 
+    SSL *ssl;
     if ((ssl = SSL_new(ctx)) == NULL) {
       ERR_print_errors_fp(stderr);
       printf("Error creating SSL handle for new connection\n");
@@ -95,8 +95,4 @@ int main(int argc, char const *argv[]) {
     printf("Client connection closed, %zu bytes sent\n", total);
     SSL_free(ssl);
   }
-
-  // このプログラムでは実行されないが、なんらかのサーバループを停止する処理を実装して、これを呼び出す
-  SSL_CTX_free(ctx);
-  return EXIT_SUCCESS;
 }

@@ -17,12 +17,8 @@ int main(int argc, char *argv[]) {
   }
 
   // サーバ証明書検証の設定
-  SSL_CTX_set_verify(ctx, SSL_VERIFY_PEER, NULL);
-  if (!SSL_CTX_set_default_verify_paths(ctx)) {
-    printf("Failed to set the default trusted certificate store\n");
-    SSL_CTX_free(ctx);
-    return EXIT_FAILURE;
-  }
+  // FIXME: 検証用に`SSL_VERIFY_NONE`で検証を行わないよう設定
+  SSL_CTX_set_verify(ctx, SSL_VERIFY_NONE, NULL);
 
   // SSLオブジェクトの作成
   SSL *ssl = NULL;
@@ -66,6 +62,7 @@ int main(int argc, char *argv[]) {
     printf("Failed to tls hancshake\n");
     ERR_print_errors_fp(stderr);
 
+    // 認証エラーの場合は原因を出力する
     if (SSL_get_verify_result(ssl) != X509_V_OK)
       printf("Verify error: %s\n",
              X509_verify_cert_error_string(SSL_get_verify_result(ssl)));
@@ -76,29 +73,18 @@ int main(int argc, char *argv[]) {
     return EXIT_FAILURE;
   }
 
-  // FIXME:
-  printf("Cipher: %s\n", SSL_get_cipher(ssl));
-  printf("Version: %s\n", SSL_get_version(ssl));
-
   // サーバにデータを送る
   const char *message = "Hello, TLS!!";
   SSL_write(ssl, message, strlen(message));
-  printf("Sent message to server\n");
+  printf("Send message to server\n");
 
   // サーバからデータを受信する
   char buff[256] = {};
   SSL_read(ssl, buff, sizeof(buff));
-  printf("Recive message from server: \"%s\"", buff);
+  printf("Recive message from server: \"%s\"\n", buff);
 
   // クリーンアップ処理
-  if (SSL_shutdown(ssl) < 1) {
-    printf("Failed to shutdown ssl\n");
-    close(sock);
-    SSL_free(ssl);
-    SSL_CTX_free(ctx);
-    return EXIT_FAILURE;
-  }
-
+  SSL_shutdown(ssl);
   close(sock);
   SSL_free(ssl);
   SSL_CTX_free(ctx);
