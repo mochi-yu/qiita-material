@@ -7,6 +7,20 @@
 #include <sys/socket.h>
 #include <unistd.h>
 
+void keylog_callback(const SSL *ssl, const char *line) {
+  FILE *fp;
+
+  fp = fopen("keylog.log", "a");
+  if (fp == NULL) {
+    fprintf(stderr, "Can't open keylog fil.\n");
+    return;
+  }
+
+  fprintf(fp, "%s\n", line);
+
+  fclose(fp);
+}
+
 int main(int argc, char *argv[]) {
   // SSL_CTXの作成
   SSL_CTX *ctx = NULL;
@@ -19,6 +33,9 @@ int main(int argc, char *argv[]) {
   // サーバ証明書検証の設定
   // FIXME: 検証用に`SSL_VERIFY_NONE`で検証を行わないよう設定
   SSL_CTX_set_verify(ctx, SSL_VERIFY_NONE, NULL);
+
+  // キーログファイルの記録用コールバックを設定
+  SSL_CTX_set_keylog_callback(ctx, keylog_callback);
 
   // SSLオブジェクトの作成
   SSL *ssl = NULL;
