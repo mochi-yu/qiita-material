@@ -31,7 +31,7 @@ int main(int argc, char *argv[]) {
   }
 
   // サーバ証明書検証の設定
-  // FIXME: 検証用に`SSL_VERIFY_NONE`で検証を行わないよう設定
+  // FIXME: 検証用に`SSL_VERIFY_NONE`で証明書の検証を行わないよう設定
   SSL_CTX_set_verify(ctx, SSL_VERIFY_NONE, NULL);
 
   // キーログファイルの記録用コールバックを設定
