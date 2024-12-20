@@ -1,15 +1,16 @@
 package main
 
 import (
-	"log"
+	"fmt"
 	"time"
 )
 
 func main() {
 	loc, err := time.LoadLocation("Asia/Tokyo")
 	if err != nil {
-		log.Fatal("!!ERROR!! ", err)
+		fmt.Println("!!ERROR!! ", err)
+		return
 	}
 
-	log.Print(time.Now().In(loc))
+	fmt.Println("Time: ", time.Now().In(loc))
 }
