@@ -3,11 +3,18 @@ package main
 import (
 	"crypto/tls"
 	"log"
+	"os"
 )
 
 func main() {
+	w, err := os.Create("keylog.log")
+	if err != nil {
+		log.Fatal("open file: ", err)
+	}
+
 	conf := &tls.Config{
 		InsecureSkipVerify: true, // 検証のためにTLSの検証をスキップ
+		KeyLogWriter:       w,
 	}
 
 	conn, err := tls.Dial("tcp", "127.0.0.1:12345", conf)
