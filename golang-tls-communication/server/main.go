@@ -30,9 +30,9 @@ func main() {
 
 		log.Println("New client connection accepted")
 		go func(conn net.Conn) {
-			r := bufio.NewScanner(conn)
-			for r.Scan() {
-				msg := r.Text()
+			s := bufio.NewScanner(conn)
+			for s.Scan() {
+				msg := s.Text()
 				log.Printf("Accept Message: `%s`", msg)
 				_, err := conn.Write([]byte(msg))
 				if err != nil {
