@@ -12,7 +12,7 @@ void keylog_callback(const SSL *ssl, const char *line) {
 
   fp = fopen("keylog.log", "a");
   if (fp == NULL) {
-    fprintf(stderr, "Can't open keylog fil.\n");
+    fprintf(stderr, "Can't open keylog file.\n");
     return;
   }
 
@@ -76,7 +76,7 @@ int main(int argc, char *argv[]) {
 
   // TLSハンドシェイクを行う
   if (SSL_connect(ssl) < 1) {
-    printf("Failed to tls hancshake\n");
+    printf("TLS handshake failed\n");
     ERR_print_errors_fp(stderr);
 
     // 認証エラーの場合は原因を出力する
@@ -98,7 +98,7 @@ int main(int argc, char *argv[]) {
   // サーバからデータを受信する
   char buff[256] = {};
   SSL_read(ssl, buff, sizeof(buff));
-  printf("Recive message from server: \"%s\"\n", buff);
+  printf("Receive message from server: \"%s\"\n", buff);
 
   // クリーンアップ処理
   SSL_shutdown(ssl);
