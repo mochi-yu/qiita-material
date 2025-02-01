@@ -1,5 +1,4 @@
-*
-!.gitignore
-!*.go
-!go.mod
-!Makefile
+*.log
+*.key
+*.crt
+*.pcap
