@@ -21,12 +21,12 @@ func main() {
 	}
 	quicConf := &quic.Config{}
 
-	sess, err := quic.DialAddr(context.Background(), "127.0.0.1:12345", tlsConf, quicConf)
+	conn, err := quic.DialAddr(context.Background(), "127.0.0.1:12345", tlsConf, quicConf)
 	if err != nil {
 		log.Fatal("dial: ", err)
 	}
 
-	stream, err := sess.OpenStreamSync(context.Background())
+	stream, err := conn.OpenStreamSync(context.Background())
 	if err != nil {
 		log.Fatal("open stream: ", err)
 	}
