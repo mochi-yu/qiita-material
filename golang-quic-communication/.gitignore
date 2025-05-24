@@ -1,0 +1,4 @@
+*.crt
+*.key
+*.pcap
+*.log
