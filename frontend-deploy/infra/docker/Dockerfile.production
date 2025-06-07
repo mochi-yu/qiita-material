@@ -1,0 +1,41 @@
+####### ベースイメージ #######
+FROM node:24-slim AS base
+#############################
+
+####### ビルドステージ #######
+FROM base AS builder
+
+WORKDIR /app
+
+# 依存関係のインストール
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+RUN corepack enable
+
+# ソースコードのコピーとビルド
+COPY package.json pnpm-lock.yaml ./
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
+
+COPY . .
+RUN pnpm run build
+############################
+
+####### 実行ステージ #######
+FROM base AS runner
+
+WORKDIR /app
+
+# 環境変数の設定
+ENV NODE_ENV=production
+
+# ビルドステージから必要なファイルをコピー
+COPY --from=builder /app/public ./public
+COPY --from=builder /app/.next/standalone ./
+COPY --from=builder /app/.next/static ./.next/static
+
+# ポートの公開
+EXPOSE 3000
+
+# アプリケーションの起動
+CMD ["/bin/sh", "-c", "HOSTNAME=0.0.0.0 PORT=3000 node server.js"]
+#############################

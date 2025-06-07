@@ -1,4 +1,9 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## frontend-deploy
+このリポジトリでは、フロントエンドをデプロイする環境の例示です。
+
+### 参考リンク
+- [pnpm を Docker 環境で利用する](https://pnpm.io/docker)
+- [next.js の `output: standalone` 設定](https://nextjs.org/docs/app/api-reference/config/next-config-js/output#automatically-copying-traced-files)
 
 ## Getting Started
 

@@ -1,0 +1,9 @@
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: infra/docker/Dockerfile.production
+    container_name: frontend-deploy
+    restart: always
+    ports:
+      - "3000:3000"
