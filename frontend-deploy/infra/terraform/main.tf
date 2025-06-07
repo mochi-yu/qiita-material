@@ -19,3 +19,9 @@ provider "google" {
     application = "frontend-deploy"
   }
 }
+
+module "docker-registry" {
+  source = "./modules/docker-registry"
+  repository_id = "frontend-deploy"
+  description = "フロントエンドをデプロイするテストのためのイメージ"
+}
